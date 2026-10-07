@@ -1,0 +1,8 @@
+<h1>Catalogue</h1>
+<input aria-label="Filtrer par auteur" placeholder="Filtrer par auteur" (input)="filtre.set($any($event.target).value)">
+<p aria-live="polite">{{ resultats().length }} livre(s)</p>
+<ul>
+    @for (livre of resultats(); track livre.id) {
+        <li><a [routerLink] ="['/livre', livre.id]">{{livre.titre}}</a>, {{livre.auteur}}, {{livre.prix}} €</li>
+    }
+</ul>
