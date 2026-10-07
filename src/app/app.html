@@ -1,7 +1,35 @@
 <header class="entete">
-    <a routerLink="/"><b>Book Market</b> Page</a>
-    <a routerLink="/">Catalogue</a>
+  <a class="brand" routerLink="/" aria-label="Book Market — accueil"
+    ><img src="favicon.io.png" alt="Book Market" width="84" height="84" /><span
+      >Book<span class="brand-accent">-Market</span><small>Des livres, des horizons.</small></span
+    ></a
+  >
+  <nav aria-label="Navigation principale">
+    <a class="nav-link" routerLink="/">Catalogue <span aria-hidden="true">↗</span></a>
+    <a
+      class="nav-link cart-link"
+      routerLink="/panier"
+      [attr.aria-label]="'Panier : ' + panier.nombre() + ' livre(s)'"
+    >
+      <svg
+        aria-hidden="true"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+      >
+        <path d="M5 7h14l1 14H4L5 7Z" />
+        <path d="M8 8V6a4 4 0 0 1 8 0v2" />
+      </svg>
+      Panier <b class="cart-count" aria-live="polite">{{ panier.nombre() }}</b>
+    </a>
+  </nav>
 </header>
-<main>
-    <router-outlet />
-</main>
+<main><router-outlet /></main>
+<footer>
+  <span class="footer-brand">Book-Market<span aria-hidden="true"> ✳</span></span
+  ><span>Une page se tourne. Une histoire commence.</span
+  ><span>Le plaisir de lire, tout simplement.</span>
+</footer>

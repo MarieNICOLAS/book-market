@@ -1,21 +1,71 @@
+<a class="back-link" routerLink="/">← Retour au catalogue</a>
 @if (livre(); as livre) {
-    <div class="livre">
-        <div class="couv">{{livre.titre}}</div>
-        <div class="info">
-            <h1>{{livre.titre}}</h1>
-            <p> par {{livre.auteur}}</p>
-            <p class="prix">{{livre.prix}} €</p>
-            <button type="button" [disabled]="ajoute()" (click)="ajouter()">
-                {{ajoute() ? 'Ajouté' : 'Ajouter au panier'}}
-            </button>
-        </div>
+  <section class="livre">
+    <div class="book-display">
+      <span class="display-orbit" aria-hidden="true"></span>
+      <div class="book-cover couv" [attr.data-tone]="livre.id % 8">
+        <span class="cover-author">{{ livre.auteur }}</span
+        ><span class="cover-title">{{ livre.titre }}</span
+        ><span class="cover-mark">Book-Market</span>
+      </div>
+      <span class="display-note" aria-hidden="true">Le début d’une nouvelle histoire.</span>
     </div>
-    <h2>Vous aimerez aussi</h2>
+    <div class="info">
+      <p class="eyebrow">La sélection Book-Market</p>
+      <h1>{{ livre.titre }}</h1>
+      <p class="author">
+        par <strong>{{ livre.auteur }}</strong>
+      </p>
+      <div class="purchase">
+        <p class="prix">{{ livre.prix.toFixed(2).replace('.', ',') }} €</p>
+        <p class="invitation">Votre prochaine lecture vous attend.</p>
+        <button type="button" [disabled]="ajoute()" (click)="ajouter()">
+          {{ ajoute() ? 'Ajouté' : 'Ajouter au panier' }}
+        </button>
+        <p class="cart-note" aria-live="polite">
+          {{
+            ajoute()
+              ? 'Ce livre a bien été ajouté à votre sélection.'
+              : 'Un nouveau titre pour votre bibliothèque.'
+          }}
+        </p>
+      </div>
+      <p class="signature">« Le bonheur se trouve parfois entre deux pages. »</p>
+    </div>
+  </section>
+  <section class="suggestion-section" aria-labelledby="suggestion-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Prolongez la découverte</p>
+        <h2 id="suggestion-title">Vous aimerez aussi</h2>
+      </div>
+      <span aria-hidden="true">✳</span>
+    </div>
     <div class="suggestions">
-        @for (suggestion of suggestions(); track suggestion.id) {
-            <a [routerLink]="['/livre', suggestion.id]">{{ suggestion.titre }}</a>
-        }
+      @for (suggestion of suggestions(); track suggestion.id) {
+        <a [routerLink]="['/livre', suggestion.id]"
+          ><div class="suggestion-cover">
+            <div class="book-cover" [attr.data-tone]="suggestion.id % 8">
+              <span class="cover-author">{{ suggestion.auteur }}</span
+              ><span class="cover-title">{{ suggestion.titre }}</span
+              ><span class="cover-mark">Book-Market</span>
+            </div>
+          </div>
+          <h3>{{ suggestion.titre }}</h3>
+          <p>{{ suggestion.auteur }}</p>
+          <span class="suggestion-price"
+            >{{ suggestion.prix.toFixed(2).replace('.', ',') }} €
+            <span aria-hidden="true">↗</span></span
+          ></a
+        >
+      }
     </div>
+  </section>
 } @else {
-    <p>Ce livre n'existe pas.</p>
+  <section class="not-found">
+    <p class="eyebrow">Une page introuvable</p>
+    <h1>Ce livre n'existe pas.</h1>
+    <p>D’autres belles histoires vous attendent dans le catalogue.</p>
+    <a routerLink="/">Découvrir les livres →</a>
+  </section>
 }

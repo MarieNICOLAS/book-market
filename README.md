@@ -13,7 +13,7 @@ npm run build
 
 Ouvrir http://localhost:4310. Le filtre `ferrand` ou `FERRAND` affiche deux livres. Sur `/livre/1000`, ajouter le livre : le bouton devient gris, inactif et affiche « Ajouté ». Ouvrir une suggestion : son bouton reste actif. Revenir au premier livre par les suggestions : il reste ajouté. `/livre/9999` affiche un message.
 
-Comme à l'étape 7 du support, le panier est local au composant Fiche : il reste disponible entre les suggestions, mais se réinitialise au rechargement ou après un retour au catalogue. La persistance et le panier partagé sont des extensions facultatives de la dernière diapositive, non incluses ici.
+Le panier est partagé entre toutes les pages via un service Angular. Le bouton Panier de l'en-tête affiche le nombre de livres et ouvre la page `/panier`, avec le contenu, le total et la possibilité de retirer un livre. Un livre ne peut être ajouté qu'une fois. Le panier reste disponible après un retour au catalogue, mais se réinitialise au rechargement de la page.
 
 ## Étape 8 — préparer GitHub Pages
 

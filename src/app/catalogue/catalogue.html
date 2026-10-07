@@ -1,8 +1,77 @@
-<h1>Catalogue</h1>
-<input aria-label="Filtrer par auteur" placeholder="Filtrer par auteur" (input)="filtre.set($any($event.target).value)">
-<p aria-live="polite">{{ resultats().length }} livre(s)</p>
-<ul>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow"><span aria-hidden="true">✳</span> Votre prochaine belle découverte</p>
+    <h1 id="hero-title">Les belles histoires<br />commencent <em>ici.</em></h1>
+    <p class="hero-description">
+      Des pages à explorer, des voix à découvrir.<br />Trouvez le livre qui vous accompagnera
+      demain.
+    </p>
+    <a class="explore" href="#catalogue" (click)="explorer($event)"
+      >Explorer le catalogue <span aria-hidden="true">↘</span></a
+    >
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <span class="orbit"></span><span class="art-star">✳</span>
+    <div class="book-cover hero-book back" data-tone="1">
+      <span class="cover-author">Camille Baddou</span
+      ><span class="cover-title">Les clairs<br />veilleurs</span
+      ><span class="cover-mark">Book-Market</span>
+    </div>
+    <div class="book-cover hero-book front">
+      <span class="cover-author">Yann Ferrand</span
+      ><span class="cover-title">Les lointains<br />veilleurs</span
+      ><span class="cover-mark">Book-Market</span>
+    </div>
+    <span class="art-note">Encore un chapitre…</span>
+  </div>
+</section>
+<section id="catalogue" aria-labelledby="catalogue-title">
+  <div class="catalogue-heading">
+    <div>
+      <p class="eyebrow">La bibliothèque Book-Market</p>
+      <h2 id="catalogue-title">À chaque envie, un livre.</h2>
+    </div>
+    <span class="collection-label">Notre sélection · 8 titres</span>
+  </div>
+  <div class="toolbar">
+    <label class="search"
+      ><span aria-hidden="true">⌕</span
+      ><input
+        type="search"
+        aria-label="Filtrer par auteur"
+        placeholder="Rechercher un auteur…"
+        [value]="filtre()"
+        (input)="filtre.set($any($event.target).value)"
+    /></label>
+    <p class="result-count" aria-live="polite">
+      {{ resultats().length }} livre(s)<span> à découvrir</span>
+    </p>
+  </div>
+  <ul class="book-grid">
     @for (livre of resultats(); track livre.id) {
-        <li><a [routerLink] ="['/livre', livre.id]">{{livre.titre}}</a>, {{livre.auteur}}, {{livre.prix}} €</li>
+      <li>
+        <a class="book-card" [routerLink]="['/livre', livre.id]">
+          <div class="cover-stage">
+            <div class="book-cover" [attr.data-tone]="livre.id % 8">
+              <span class="cover-author">{{ livre.auteur }}</span
+              ><span class="cover-title">{{ livre.titre }}</span
+              ><span class="cover-mark">Book-Market</span>
+            </div>
+            <span class="view-book" aria-hidden="true">Découvrir ↗</span>
+          </div>
+          <div class="book-meta">
+            <h3>{{ livre.titre }}</h3>
+            <span class="book-price">{{ livre.prix.toFixed(2).replace('.', ',') }} €</span>
+          </div>
+          <p class="author">{{ livre.auteur }}</p>
+        </a>
+      </li>
+    } @empty {
+      <li class="empty">
+        <h3>Aucun livre pour cet auteur.</h3>
+        <p>Essayez un autre nom ou retrouvez toute la sélection.</p>
+        <button type="button" (click)="filtre.set('')">Effacer la recherche</button>
+      </li>
     }
-</ul>
+  </ul>
+</section>

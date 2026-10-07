@@ -1,0 +1,60 @@
+<a class="back-link" routerLink="/">← Continuer mes découvertes</a>
+<p class="eyebrow">Votre bibliothèque de demain</p>
+<h1>Mon panier</h1>
+<p class="status" role="status">{{ message() }}</p>
+@if (panier.nombre()) {
+  <div class="cart-layout">
+    <section aria-label="Livres dans le panier">
+      <p class="item-count">{{ panier.nombre() }} livre(s) dans votre sélection</p>
+      <ul class="cart-items">
+        @for (livre of panier.livres(); track livre.id) {
+          <li>
+            <a
+              class="cover-link"
+              [routerLink]="['/livre', livre.id]"
+              [attr.aria-label]="'Voir ' + livre.titre"
+              ><div class="book-cover" [attr.data-tone]="livre.id % 8">
+                <span class="cover-title">{{ livre.titre }}</span
+                ><span class="cover-mark">Book-Market</span>
+              </div></a
+            >
+            <div class="item-details">
+              <h2>
+                <a [routerLink]="['/livre', livre.id]">{{ livre.titre }}</a>
+              </h2>
+              <p>{{ livre.auteur }}</p>
+              <button
+                type="button"
+                (click)="retirer(livre)"
+                [attr.aria-label]="'Retirer ' + livre.titre"
+              >
+                Retirer
+              </button>
+            </div>
+            <strong class="item-price">{{ livre.prix.toFixed(2).replace('.', ',') }} €</strong>
+          </li>
+        }
+      </ul>
+    </section>
+    <aside aria-labelledby="summary-title">
+      <p class="eyebrow">Un peu de lecture à emporter</p>
+      <h2 id="summary-title">Votre sélection</h2>
+      <div class="total">
+        <span>Total des livres</span
+        ><strong>{{ panier.total().toFixed(2).replace('.', ',') }} €</strong>
+      </div>
+      <p class="session-note">
+        Votre panier reste disponible pendant votre navigation. Il se réinitialise si vous rechargez
+        la page.
+      </p>
+      <a class="continue" routerLink="/">Explorer d’autres livres ↗</a>
+    </aside>
+  </div>
+} @else {
+  <section class="empty">
+    <span class="empty-mark" aria-hidden="true">✳</span>
+    <h2>Votre prochaine histoire vous attend.</h2>
+    <p>Votre panier est vide. Ajoutez un livre depuis sa fiche pour le retrouver ici.</p>
+    <a class="continue" routerLink="/">Découvrir le catalogue ↗</a>
+  </section>
+}

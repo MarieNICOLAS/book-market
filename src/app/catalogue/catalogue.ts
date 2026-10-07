@@ -9,8 +9,12 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Catalogue {
+  protected explorer(event: Event) {
+    event.preventDefault();
+    document.getElementById('catalogue')?.scrollIntoView({ behavior: 'instant' });
+  }
   protected readonly filtre = signal('');
-  protected readonly resultats = computed(() => 
-    LIVRES.filter(livre => livre.auteur.toLowerCase().includes(this.filtre().toLowerCase()))
+  protected readonly resultats = computed(() =>
+    LIVRES.filter((livre) => livre.auteur.toLowerCase().includes(this.filtre().toLowerCase())),
   );
 }
